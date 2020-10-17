@@ -67,10 +67,10 @@ def add_args(parser):
     parser.add_argument('--epochs', type=int, default=5, metavar='EP',
                         help='how many epochs will be trained locally')
 
-    parser.add_argument('--client_num_in_total', type=int, default=1000, metavar='NN',
+    parser.add_argument('--client_num_in_total', type=int, default=10, metavar='NN',
                         help='number of workers in a distributed cluster')
 
-    parser.add_argument('--client_num_per_round', type=int, default=4, metavar='NN',
+    parser.add_argument('--client_num_per_round', type=int, default=10, metavar='NN',
                         help='number of workers')
 
     parser.add_argument('--comm_round', type=int, default=10,
@@ -177,7 +177,7 @@ def create_model(args, model_name, output_dim):
         model = RNN_OriginalFedAvg()
     elif model_name == "lr" and args.dataset == "stackoverflow_lr":
         logging.info("lr + stackoverflow_lr")
-        model = LogisticRegression(10004, output_dim)
+        model = LogisticRegression(10000, output_dim) 
     elif model_name == "rnn" and args.dataset == "stackoverflow_nwp":
         logging.info("RNN + stackoverflow_nwp")
         model = RNN_StackOverFlow()
