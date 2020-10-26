@@ -29,7 +29,7 @@ from fedml_api.data_preprocessing.MNIST.data_loader import load_partition_data_m
 from fedml_api.model.linear.lr import LogisticRegression
 from fedml_api.model.cv.resnet_gn import resnet18
 
-from fedml_api.standalone.fedavg.fedavg_trainer import FedAvgTrainer
+from fedml_api.standalone.hierarchical_fl.trainer import Trainer
 
 
 def add_args(parser):
@@ -73,14 +73,21 @@ def add_args(parser):
     parser.add_argument('--client_num_per_round', type=int, default=10, metavar='NN',
                         help='number of workers')
 
-    parser.add_argument('--comm_round', type=int, default=10,
-                        help='how many round of communications we shoud use')
+    parser.add_argument('--global_comm_round', type=int, default=10,
+                        help='how many round of global communications we shoud use')
+
+    parser.add_argument('--group_comm_round', type=int, default=10,
+                        help='how many round of group communications we shoud use')
 
     parser.add_argument('--frequency_of_the_test', type=int, default=5,
                         help='the frequency of the algorithms')
 
     parser.add_argument('--gpu', type=int, default=0,
                         help='gpu')
+
+    parser.add_argument('--group_method', type=str, default='random', metavar='N', help='grouping method')
+
+    parser.add_argument('--group_num', type=int, default=1, metavar='N', help='number of groups')
 
     parser.add_argument('--ci', type=int, default=0,
                         help='CI')
@@ -225,14 +232,14 @@ if __name__ == "__main__":
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
-    args = add_args(argparse.ArgumentParser(description='FedAvg-standalone'))
+    args = add_args(argparse.ArgumentParser(description='GroupFedAvg-standalone'))
     logger.info(args)
     device = torch.device("cuda:" + str(args.gpu) if torch.cuda.is_available() else "cpu")
     logger.info(device)
 
     wandb.init(
         project="fedml",
-        name="FedAVG-r" + str(args.comm_round) + "-e" + str(args.epochs) + "-lr" + str(args.lr),
+        name="GroupFedAvg-{}-{}-{}-{}".format(args.global_comm_round, args.group_comm_round, args.epochs, args.group_num),
         config=args
     )
 
@@ -251,5 +258,5 @@ if __name__ == "__main__":
     model = create_model(args, model_name=args.model, output_dim=dataset[7])
     logging.info(model)
 
-    trainer = FedAvgTrainer(dataset, model, device, args)
+    trainer = Trainer(dataset, model, device, args)
     trainer.train()
