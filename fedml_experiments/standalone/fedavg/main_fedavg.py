@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import random
 import sys
 
 import numpy as np
@@ -84,8 +85,7 @@ def add_args(parser):
 
     parser.add_argument('--ci', type=int, default=0,
                         help='CI')
-    args = parser.parse_args()
-    return args
+    return parser
 
 
 def load_data(args, dataset_name):
@@ -225,7 +225,8 @@ if __name__ == "__main__":
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
-    args = add_args(argparse.ArgumentParser(description='FedAvg-standalone'))
+    parser = add_args(argparse.ArgumentParser(description='FedAvg-standalone'))
+    args = parser.parse_args()
     logger.info(args)
     device = torch.device("cuda:" + str(args.gpu) if torch.cuda.is_available() else "cpu")
     logger.info(device)
@@ -239,8 +240,10 @@ if __name__ == "__main__":
     # Set the random seed. The np.random seed determines the dataset partition.
     # The torch_manual_seed determines the initial weight.
     # We fix these two, so that we can reproduce the result.
+    random.seed(0)
     np.random.seed(0)
-    torch.manual_seed(10)
+    torch.manual_seed(0)
+    torch.cuda.manual_seed_all(0)
 
     # load data
     dataset = load_data(args, args.dataset)
