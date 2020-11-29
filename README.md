@@ -17,14 +17,30 @@
 </p>
 
 ## News
-<b>2020-11-01</b>: Besides the Android devices, do you also want to run federated learning on <b>IoT devices</b>? Our architecture design can smoothly transplant the distributed computing code to the IoT platform. We will use Raspberry PI to demonstrate our idea. Please stay tuned! <br>
+<b>2020-11-27 (System)</b>: FedML architecture has evolved into an ecosystem including multiple GitHub repositories. With FedML at its core, we can support more advanced FL applications and platforms. <br>
+FedML: https://github.com/FedML-AI/FedML
+
+FedNLP: https://github.com/FedML-AI/FedNLP
+
+FedML-IoT: https://github.com/FedML-AI/FedML-IoT
+
+FedML-Server: https://github.com/FedML-AI/FedML-Server
+
+FedML-Mobile: https://github.com/FedML-AI/FedML-Mobile
+
+<b>2020-11-24 (Publication)</b>: We are thrilled to share that the short version o f our FedML white paper has been accepted to NeurIPS 2020 workshop. Thanks for reviewers from NeurIPS, supporting us to do a presentation there. <br>
+<img src=https://github.com/FedML-AI/FedML/blob/master/docs/image/Neurips-logo.jpg width="35%">
+
+
+<b>2020-11-05 (System)</b>: Do you want to run federated learning on <b>IoT devices</b>? FedML architecture design can smoothly transplant the distributed computing code to the IoT platform. FedML can support edge training on two IoT devices: <b>Raspberry Pi 4</b> and <b>NVIDIA Jetson Nano</b>!!! Please check it out here: https://github.com/FedML-AI/FedML/blob/master/fedml_iot/README.md <br>
 <img src=https://github.com/FedML-AI/FedML/blob/master/docs/image/raspberry_pi.png width="35%">
+<img src=https://github.com/FedML-AI/FedML/blob/master/docs/image/nvidia-jetson-nano.png width="35%">
 
-<b>2020-10-28</b>: We released more advanced federated optimization algorithms, more than just FedAvg! http://doc.fedml.ai/#/algorithm-reference-implementation
+<b>2020-10-28 (Algorithms) </b>: We released more advanced federated optimization algorithms, more than just FedAvg! http://doc.fedml.ai/#/algorithm-reference-implementation
 
-<b>2020-10-26</b>: V2 of our white paper is released. Please check out here: https://arxiv.org/pdf/2007.13518.pdf
+<b>2020-10-26 (Publication) </b>: V2 of our white paper is released. Please check out here: https://arxiv.org/pdf/2007.13518.pdf
 
-<b>2020-10-07</b>: Datasets + Models ALL IN ONE!!! FedML supports comprehensive research-oriented FL datasets and models:
+<b>2020-10-07 (Model and Dataset) </b>: Datasets + Models ALL IN ONE!!! FedML supports comprehensive research-oriented FL datasets and models:
 
 - cross-device CV: Federated EMNIST + CNN (2 conv layers)
 - cross-device CV: CIFAR100 + ResNet18 (Group Normalization)
@@ -40,11 +56,11 @@ We will support more advanced models and datasets, please stay tuned!
 
 ---
 
-<b>2020-09-30</b>: We maintained a comprehensive publication list of Federated Learning here: https://github.com/chaoyanghe/Awesome-Federated-Learning
+<b>2020-09-30 (Publication)</b>: We maintained a comprehensive publication list of Federated Learning here: https://github.com/chaoyanghe/Awesome-Federated-Learning
 
 ---
 
-<b>2020-09-28</b>: Authors of FedML (https://fedml.ai) have 7 papers that got accepted to NeurIPS 2020. Big congratulations!!!
+<b>2020-09-28 (Publication)</b>: Authors of FedML (https://fedml.ai) have 7 papers that got accepted to NeurIPS 2020. Big congratulations!!!
 Here is the publication list: https://github.com/FedML-AI/FedML/blob/master/publications.md. Highlighted ones are related to large-scale distributed learning and federated learning.
 
 
@@ -72,7 +88,7 @@ For more details, please read our full paper: [https://arxiv.org/abs/2007.13518]
 
 ## Architecture
 
-![architecture](./docs/image/architecture_for_website.png)
+<img src="./docs/image/fedml.jpg" width="620">
 
 
 The functionality of each package is as follows:
@@ -80,17 +96,21 @@ The functionality of each package is as follows:
 **fedml_core**: The FedML low level API package. This package implements distributed computing by communication backend like MPI, and also support topology management. 
 Other low-level APIs related to security and privacy are also supported.
 
-**fedml**: The FedML high level API package. This package support different federated learning algorithm with only one line code.
+**fedml_api**: The FedML high level API package. This package support different federated learning algorithm with only one line code.
 All algorithms are built based on the "fedml_core" package.
 Users can change this package to add more advanced algorithms.
 
-**fedml_mobile**: This package is used to support on-device training using Android/iOS smartphones. 
 
 **fedml_experiments**: This package is used to test algorithms in "fedml" package by calling high level APIs.
 
-**benchmark**: This package is used to run benchmark experiments.
+**fedml_mobile**: This package is used to support on-device training using Android/iOS smartphones. 
+
+**fedml_IoT**: This package is used to support on-device training using IoT devices. 
 
 **applications**: This package is a collection of applications based on FedML.
+
+**benchmark**: This package is used to run benchmark experiments.
+
 
 
 ## Join our Community
@@ -98,28 +118,6 @@ Please join our community. We will post updated features and answer questions on
 
 [Join fedml.slack.com](https://join.slack.com/t/fedml/shared_invite/zt-havwx1ee-a1xfOUrATNfc9DFqU~r34w)
 (this is a link that never expires)
-
-## Contributing
-We sincerely welcome contributors and believe in the power of the open source. We welcome expertise from two tracks, either research or engineering.
-
-1. If you are a researcher who needs APIs that our library does not support yet, please send us your valuable suggestions.
-
-2. If you are a researcher who has published FL-related algorithm or system-level optimization, we welcome you to submit your source code to FedML, which will then be maintained by our engineers and researchers.
-
-3. If you are an engineer or student who is searching for interesting open source projects to broaden your career, FedML is perfect for you. Currently, we are developing the following urgent features.
-
-i) transplanting more advanced FL algorithms to FedML. We will show you some important research publications once you are involved. 
-For this role, we prefer engineers or students who have a basic understanding of machine learning.
-
-ii) FedML-Mobiel service architecture: Flask + PyTorch + RabbitMQ
-
-iii) upgrading our Android and iOS platform.
-
-iv) building or applying more models in computer vision and NLP domains to FedML.
-
-v) collecting realistic federated datasets by crowdsourcing.
-
-Please email us for further information. 
 
 ## Citation
 Please cite FedML in your publications if it helps your research:
